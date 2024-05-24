@@ -1,6 +1,6 @@
 # Project deploy
 
-Open []
+Open [https://react-redux-indol.vercel.app/]
 
 # Getting Started with Create React App
 

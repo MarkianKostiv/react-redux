@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
@@ -14,6 +14,7 @@ import { fetchPostById } from "../../../state/posts/postsSlice";
 const PostAdd: React.FC<PostAddProps> = ({ requestType, initialValues }) => {
   const { userId, postId } = useParams<{ userId?: string; postId?: string }>();
   const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
   const post = useSelector((state: RootState) =>
     state.posts.posts.find((p) => p.id === Number(postId))
   );
@@ -95,23 +96,16 @@ const PostAdd: React.FC<PostAddProps> = ({ requestType, initialValues }) => {
         <h2 className='font-semibold text-xl'>
           {requestType === "POST" ? "Add New Post" : "Update Post"}
         </h2>
-        <Link
-          to={
-            requestType === "POST"
-              ? `/user/posts/${userId}`
-              : `/post/details/${postId}`
-          }
-        >
-          <button
-            className={`font-semibold text-xl 
+        <button
+          onClick={() => navigate(-1)}
+          className={`font-semibold text-xl 
           pt-4 pb-4 pr-6 pl-6 
           bg-[#F58E8E] hover:bg-[#f45858] 
           duration-300 rounded-xl transform active:scale-95 
           active:bg-[#f6cbcb] focus:outline-none shadow-md hover:shadow-lg active:shadow-none`}
-          >
-            X
-          </button>
-        </Link>
+        >
+          X
+        </button>
       </div>
       <ToastContainer />
       <Formik
